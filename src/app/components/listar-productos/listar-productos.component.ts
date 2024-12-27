@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ProductoService } from '../../services/producto.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-listar-productos',
@@ -10,8 +12,18 @@ import { RouterLink } from '@angular/router';
 
 
 export class ListarProductosComponent {
-  debug() {
-    console.log('El botón fue clicado');
-    console.log('Intentando redirigir a /crear-producto');
-  }
+   constructor(private _productoService: ProductoService){}
+
+   ngOnInit(){
+    this.obtenerProductos();
+   }
+
+   obtenerProductos(){
+    this._productoService.getProductos().subscribe( data =>{
+      console.log(data);
+    }, error =>{
+      console.log(error);
+    })
+    }
+
 }
