@@ -9,7 +9,10 @@
     padding: 6px;
     border-radius: 5px;
 }
-
+.txt-sinProductos{
+    text-align: start;
+    margin-top: 10px;
+}
 .icon-edit{
     background-color: green;
     padding: 6px;
