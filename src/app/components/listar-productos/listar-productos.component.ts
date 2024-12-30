@@ -5,6 +5,8 @@ import { error } from 'console';
 import { Producto } from '../../models/producto/producto.module';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -38,19 +40,39 @@ export class ListarProductosComponent implements OnInit{
     }
 
     eliminarProducto(id: any) {
-      const confirmacion = window.confirm('¿Está seguro de que desea eliminar este producto?');
-    
-      if (confirmacion) {
-        this._productoService.eliminarProducto(id).subscribe(
-          data => {
-            this.toastr.error('El producto ha sido eliminado con éxito', 'Producto eliminado');
-            this.obtenerProductos();
-          },
-          error => {
-            console.log(error);
-          }
-        );
-      }
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir esta acción.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Llama al servicio para eliminar el producto
+          this._productoService.eliminarProducto(id).subscribe(
+            data => {
+              Swal.fire(
+                '¡Eliminado!',
+                'El producto ha sido eliminado correctamente.',
+                'success'
+              );
+              // Refresca la lista de productos
+              this.obtenerProductos();
+            },
+            error => {
+              console.error(error);
+              Swal.fire(
+                'Error',
+                'Hubo un problema al eliminar el producto.',
+                'error'
+              );
+            }
+          );
+        }
+      });
     }
     
 
