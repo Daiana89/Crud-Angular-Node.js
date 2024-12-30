@@ -23,20 +23,10 @@
                         <td>{{ producto.ubicacion }}</td>
                         <td>{{ producto.precio | currency: 'USD' }}</td>
                         <td>
-                          <i class="fa-solid fa-pen-to-square icon-edit"></i>
-                          <i class="fa-solid fa-trash icon-delete"></i>
+                          <i [routerLink]="['/editar-producto', producto._id]" class="fa-solid fa-pen-to-square icon-edit"></i>
+                          <i (click)="eliminarProducto(producto._id)" class="fa-solid fa-trash icon-delete"></i>
                         </td>
-                      </tr>
-                      <tr>
-                        <td scope="row">Oreos</td>
-                        <td>Galletas</td>
-                        <td>Buenos Aires</td>
-                        <td>$1500</td>
-                        <td>
-                          <i class="fa-solid fa-pen-to-square icon-edit"></i>
-                          <i class="fa-solid fa-trash icon-delete"></i>
-                        </td>
-                      </tr>            
+                      </tr>     
                     </tbody>
                   </table>
                   <h5 class="txt-sinProductos" *ngIf="listProductos.length == 0 ">No hay producto para mostrar</h5>
